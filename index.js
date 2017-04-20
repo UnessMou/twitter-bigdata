@@ -25,6 +25,17 @@ app.get('/tweets', function (req, res) {
   });
 });
 
+app.get('/get', function (req, res) {
+  var params = {q: '#Macron', count: 100};
+  client.get('search/tweets', params, function(error, tweets, response) {
+  if (!error) {
+    tweets.statuses.forEach(function(tweet) {
+      collection.insert(tweet);
+    })
+   }
+  });
+});
+
 app.listen(3000, function () {
   console.log('listening on port 3000!');
 });
